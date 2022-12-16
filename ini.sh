@@ -30,6 +30,8 @@ else
     echo "Pygame library already installed!"
 fi
 
+pip install pyinstaller
+
  echo "\n--------------------------------"
  echo "Starting game..."
 
