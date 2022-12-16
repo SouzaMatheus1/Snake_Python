@@ -10,17 +10,21 @@ def on_grid_random():
 def feed(cel1, cel2):
     return (cel1[0] == cel2[0]) and (cel1[1] == cel2[1])
 
-def collision(c1):
-    cont = 0
-    while cont < len(c1) + 1:
-        cont += 1
-        return c1[0] == c1[cont]
+def collision_snake(c1):
+    for i in range(1, len(snake) - 1):
+        if snake[0][0] == snake[i][0] and snake[0][1] == snake[i][1]:
+            return True
+
+def collision_wall(c1):
+    if snake[0][0] == 600 or snake[0][1] == 600 or snake[0][0] < 0 or snake[0][1] < 0:
+        return True
 
 up = 0
 right = 1
 left = 2
 down = 3
 direction = left
+game_over = False
 
 # Screen creation
 pygame.init()
@@ -49,11 +53,17 @@ while True:
     if feed(snake[0], apple_pos):
         apple_pos = on_grid_random()
         snake.append((0,0))
-        tick += 0.2
+        tick += 0.5
 
-    if collision(snake):
-        print('daoshnfaos')
+    if collision_snake(snake):
+        game_over = collision_snake(snake)
+        
+    if collision_wall(snake):
+        game_over = True
 
+    if game_over:
+        break
+    
     for i in range(len(snake) - 1, 0, -1):
         snake[i] = (snake[i-1][0], snake[i-1][1])
 
@@ -66,6 +76,8 @@ while True:
             direction = left
         if event.key == K_RIGHT:
             direction = right
+        if event.key == K_ESCAPE:
+            break
 
     if direction == up:
         snake[0] = (snake[0][0], snake[0][1] - 10)

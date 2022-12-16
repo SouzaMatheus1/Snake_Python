@@ -33,4 +33,4 @@ fi
  echo "\n--------------------------------"
  echo "Starting game..."
 
-python3 app.py
+python3 snake.py
