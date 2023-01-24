@@ -53,7 +53,7 @@ while True:
     if feed(snake[0], apple_pos):
         apple_pos = on_grid_random()
         snake.append((0,0))
-        tick += 0.5
+        tick += 1
 
     if collision_snake(snake):
         game_over = collision_snake(snake)
