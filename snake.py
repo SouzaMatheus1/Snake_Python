@@ -11,12 +11,12 @@ def onGridRandom():
 def feed(cel1, cel2):
     return (cel1[0] == cel2[0]) and (cel1[1] == cel2[1])
 
-def collisionSnake(c1):
+def collisionSnake():
     for i in range(1, len(snake) - 1):
         if snake[0][0] == snake[i][0] and snake[0][1] == snake[i][1]:
             return True
 
-def collisionWall(c1):
+def collisionWall():
     if snake[0][0] == 600 or snake[0][1] == 600 or snake[0][0] < 0 or snake[0][1] < 0:
         return True
 
@@ -100,10 +100,10 @@ while True:
         tick += 1
         score += 1
 
-    if collisionSnake(snake):
-        game_over = collisionSnake(snake)
+    if collisionSnake():
+        game_over = collisionSnake()
         
-    if collisionWall(snake):
+    if collisionWall():
         game_over = True
 
     if event.type == MOUSEBUTTONDOWN:
