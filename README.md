@@ -3,6 +3,7 @@
 ``` 
 $ pip install random
 $ pip install pygame
+$ pip install os
 ```
 
 # O jogo da cobrinha feito em python
@@ -10,4 +11,5 @@ $ pip install pygame
 ``` 
 $ pip install random
 $ pip install pygame
+$ pip install os
 ```
