@@ -25,6 +25,7 @@ left = 2
 down = 3
 direction = left
 game_over = False
+score = 0
 
 # Screen creation
 pygame.init()
@@ -44,8 +45,20 @@ apple_pos = on_grid_random()
 clock = pygame.time.Clock()
 tick = 10
 
+# Score font
+font = pygame.font.SysFont("hack", 30, True, False)
+
+# Exit button
+button_text = font.render("Exit!", True, (0,0,0))
+button_position = ((600 - 70) // 2, (600) // 2)
+
+
 while True:
     clock.tick(tick)
+
+    message = f'Score: {score}'
+    text_format = font.render(message, False, (255,255,255))
+
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
@@ -54,6 +67,7 @@ while True:
         apple_pos = on_grid_random()
         snake.append((0,0))
         tick += 1
+        score += 1
 
     if collision_snake(snake):
         game_over = collision_snake(snake)
@@ -61,8 +75,25 @@ while True:
     if collision_wall(snake):
         game_over = True
 
+    if event.type == MOUSEBUTTONDOWN:
+        x,y = event.pos
+        if button_position[0] < x < button_position[0] + (600 - 70) // 2 and \
+            button_position[1] < y < button_position[1] + (600) // 2:
+            print("Botão clicado!")
+            pygame.quit()
+            exit()
+
     if game_over:
-        break
+        game_over_message = "GAME OVER!"
+        game_over_format = font.render(game_over_message, False, (255,255,255))
+        screen.blit(game_over_format, ((300 - 70),(300 - 30)))
+
+        pygame.draw.rect(screen, (255,255,255), (button_position, (70, 30)))
+        screen.blit(button_text, (button_position[0] + 10, button_position[1] + 8))
+        
+        pygame.display.flip()
+        continue
+
     
     for i in range(len(snake) - 1, 0, -1):
         snake[i] = (snake[i-1][0], snake[i-1][1])
@@ -93,5 +124,7 @@ while True:
     screen.blit(apple, apple_pos)
     for pos in snake:
         screen.blit(snake_skin, pos)
+    
+    screen.blit(text_format, (10, 10))
 
     pygame.display.update()
